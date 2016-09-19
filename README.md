@@ -15,12 +15,28 @@ PC<br>
 JAX-RS<br>
 GlassFish Server 4.1.1 Open Source Edition<br>
 PostgreSQL 9.5.2 <br>
-Raspbian (installed on raspberry)
-Fedora 24 64-bit (installed on PC)
-Android SDK (utilized to make the Android Application)
+Raspbian (installed on raspberry)<br>
+Fedora 24 64-bit (installed on PC)<br>
+Android SDK (utilized to make the Android Application)<br>
+Pi4J (JAVA API to communication with GPIOs on Raspberry)<br>
+Ardulink (JAVA solution to communication with arduino)<br>
+JDK 1.8<br>
+
+<b>OBS.: All needed libraries are at into each project (Netbeans 8.1) at web/WEB-INF/lib/</b>
+<p>Netbeans projects:</p>
+  * tcc_arduino
+  * tcc_fim
+  * tcc_raspberry
+  
+<p>Arduino hardware code:</p>
+  * arduino-hardware-code
+  
+<p>Database info:</p>
+  * database-experiment
 
 <h4>Mockup</h4>
-Robotic Arm [can be purchased found here](http://produto.mercadolivre.com.br/MLB-705787284-super-kit-braco-robotico-educacional-completo-p-arduino-_JM)
-<br>Objects [can be purchased here](https://www.armazemdaminiatura.com.br/Home.asp?IDLoja=3692)
-<br>Elevator dimensions: 7,5CM()
+Robotic Arm [can be purchased here](http://produto.mercadolivre.com.br/MLB-705787284-super-kit-braco-robotico-educacional-completo-p-arduino-_JM)
+<br>Obstacle sensor [can be purchased here](http://produto.mercadolivre.com.br/MLB-716112665-sensor-de-obstaculo-infravermelho-reflexo-lm393-p-arduino-_JM)
+<br>Objects [can be purchased here](https://www.armazemdaminiatura.com.br/Home.asp?IDLoja=3692), [can be found on database](https://github.com/heronsanches/final-paper/blob/master/database-experiment/full_pg_dump.pgsql#L596)
+<br>Elevator dimensions: 7,5cm(width)x12cm(height)x6,7cm(length)
 <br>Mockup video [can be found here](https://drive.google.com/open?id=0B0K9g5l4CVtDRU14amRINkEybG8)
