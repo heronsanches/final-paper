@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "699647302717",
+    "firebase_url": "https://tcc-heronsanches-c0be5.firebaseio.com",
+    "project_id": "tcc-heronsanches-c0be5",
+    "storage_bucket": "tcc-heronsanches-c0be5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699647302717:android:e673b03a51b09441",
+        "android_client_info": {
+          "package_name": "ufba.heronsanches.tcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699647302717-4jdt6pj86g01799rcjtpb8hih2mj1brp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ufba.heronsanches.tcc",
+            "certificate_hash": "C4D483D605F0235A49C76E7AB202368E3C25D0BF"
+          }
+        },
+        {
+          "client_id": "699647302717-aain133s27bronrteuc500e7ktphelar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI_DZFFBY9jcVGnecDR5WLaSqzIbBUTXo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699647302717-aain133s27bronrteuc500e7ktphelar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
