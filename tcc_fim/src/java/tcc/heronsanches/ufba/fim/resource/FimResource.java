@@ -102,19 +102,11 @@ public class FimResource {
     @PUT
     @Path("training-network")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void trainingNetwork(String json){   
-        
-        new Thread(){
-            
-            @Override
-            public void run() {
-                
-                JsonObject jo = JSONUtils.convertStringtoJSON(json);
-                MultilayerPerceptronWeka.trainingNetwork(jo.getString("pathToArrf"));
+    @Produces(MediaType.TEXT_PLAIN)
+    public String trainingNetwork(String json){   
 
-            }
-            
-        }.run();
+        JsonObject jo = JSONUtils.convertStringtoJSON(json);
+        return MultilayerPerceptronWeka.trainingNetwork(jo.getString("pathToArrf"));
         
     }
     
@@ -230,8 +222,8 @@ public class FimResource {
                                 /*if(joEl.getJsonNumber("maxMass").doubleValue() >= joCar.getJsonNumber("maxMass").doubleValue()
                                     && !joCar.getBoolean("moving") && !joCar.getBoolean("obstacleSensor")){*/
                                     
-                                    //verifying if is sidde effect!
-                                    if(MultilayerPerceptronWeka.isSideEffect(basketFileName)){
+                                    //verifying if is sidde effect! TODO uncomment it when put in production!
+                                    /*if(MultilayerPerceptronWeka.isSideEffect(basketFileName)){
                                         
                                         FimResource.idTuple = 0;
                                         
@@ -253,7 +245,7 @@ public class FimResource {
                                         return JSONUtils.getJsonString(job.add(Constants.STATUS, Constants.ERROR)
                                             .add(Constants.MESSAGE, "Sidde effect detected! Please veryfies the itens on car, maybe there are a lot of them.").build());
                                         
-                                    }
+                                    }*/
                                     
                                     ra4 = new RequestAnswer(RequestAnswer.PATH_RESOURCE_ARDUINO+"car/go-to-elevator", HttpConnection.METHOD_PUT);
                                     result = HttpConnection.makePutRequest(ra4.getRequestPath());

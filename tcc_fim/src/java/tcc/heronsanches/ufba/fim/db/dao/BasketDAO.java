@@ -17,15 +17,15 @@ public class BasketDAO {
     public String getBasketWeka(long idBasket){
         
         Connection con = DB.getConnectionDB();
-        final int sideEffect = 1;
-        final int nonSideEffect = 0;
+        final String sideEffect = "yes";
+        final String nonSideEffect = "no";
         
         final String head = "@RELATION basket\n\n"
-                + "@ATTRIBUTE average_num_width REAL\n"
-                + "@ATTRIBUTE average_num_height REAL\n"
-                + "@ATTRIBUTE average_num_length REAL\n"
-                + "@ATTRIBUTE average_num_mass REAL\n"
-                + "@ATTRIBUTE average_num_diameter REAL\n"
+                + "@ATTRIBUTE a_num_width REAL\n"
+                + "@ATTRIBUTE a_num_height REAL\n"
+                + "@ATTRIBUTE a_num_length REAL\n"
+                + "@ATTRIBUTE a_num_mass REAL\n"
+                + "@ATTRIBUTE a_num_diameter REAL\n"
                 + "@ATTRIBUTE quantity_itens REAL\n"
                 + "@ATTRIBUTE class {"+nonSideEffect+","+sideEffect+"}\n\n"
                 + "@DATA\n";
@@ -80,9 +80,9 @@ public class BasketDAO {
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",1";
+                            dataset += ","+sideEffect;
                         else
-                            dataset += ",0";
+                            dataset += ","+nonSideEffect;
 
                         dataset += "\n";  
                         
@@ -118,9 +118,9 @@ public class BasketDAO {
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",1";
+                            dataset += ","+sideEffect;
                         else
-                            dataset += ",0";
+                            dataset += ","+nonSideEffect;
                         
                     }
                     
@@ -140,15 +140,15 @@ public class BasketDAO {
     public String generatesDatasetWeka(){
         
         Connection con = DB.getConnectionDB();
-        final int sideEffect = 1;
-        final int nonSideEffect = 0;
+        final String sideEffect = "yes";
+        final String nonSideEffect = "no";
         
         final String head = "@RELATION basket\n\n"
-                + "@ATTRIBUTE average_num_width REAL\n"
-                + "@ATTRIBUTE average_num_height REAL\n"
-                + "@ATTRIBUTE average_num_length REAL\n"
-                + "@ATTRIBUTE average_num_mass REAL\n"
-                + "@ATTRIBUTE average_num_diameter REAL\n"
+                + "@ATTRIBUTE a_num_width REAL\n"
+                + "@ATTRIBUTE a_num_height REAL\n"
+                + "@ATTRIBUTE a_num_length REAL\n"
+                + "@ATTRIBUTE a_num_mass REAL\n"
+                + "@ATTRIBUTE a_num_diameter REAL\n"
                 + "@ATTRIBUTE quantity_itens REAL\n"
                 + "@ATTRIBUTE class {"+nonSideEffect+","+sideEffect+"}\n\n"
                 + "@DATA\n";
@@ -202,9 +202,9 @@ public class BasketDAO {
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",1";
+                            dataset += ","+sideEffect;
                         else
-                            dataset += ",0";
+                            dataset += ","+nonSideEffect;
 
                         dataset += "\n";  
                         
@@ -240,9 +240,9 @@ public class BasketDAO {
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",1";
+                            dataset += ","+sideEffect;
                         else
-                            dataset += ",0";
+                            dataset += ","+nonSideEffect;
                         
                     }
                     
