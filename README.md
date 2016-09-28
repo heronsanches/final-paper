@@ -21,12 +21,17 @@ Android SDK (utilized to make the Android Application)<br>
 Pi4J (JAVA API to communication with GPIOs on Raspberry)<br>
 Ardulink (JAVA solution to communication with arduino)<br>
 JDK 1.8<br>
+Android Studio<br>
+Netbeans 8.1<br>
 
 <b>OBS.: All needed libraries are at into each project (Netbeans 8.1) at web/WEB-INF/lib/</b>
 <p>Netbeans projects:</p>
   * tcc_arduino
   * tcc_fim
   * tcc_raspberry
+  
+<p>Android Studio project:</p>
+  * Tcc
   
 <p>Arduino hardware code:</p>
   * arduino-hardware-code
