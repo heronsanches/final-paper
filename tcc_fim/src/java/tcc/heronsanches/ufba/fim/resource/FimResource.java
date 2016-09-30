@@ -111,6 +111,19 @@ public class FimResource {
     }
     
     
+    /**train network and saves the classifier*/
+    @PUT
+    @Path("training-network-holdout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String trainingNetworkHoldout(String json){   
+
+        JsonObject jo = JSONUtils.convertStringtoJSON(json);
+        return MultilayerPerceptronWeka.trainingNetworkHoldout(jo.getString("pathToArrf"));
+        
+    }
+    
+    
     private final ExecutorService executorService = java.util.concurrent.Executors.newCachedThreadPool();
 
     /**returns info about testing*/
