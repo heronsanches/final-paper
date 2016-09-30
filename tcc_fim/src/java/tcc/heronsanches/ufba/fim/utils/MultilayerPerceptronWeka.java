@@ -111,7 +111,7 @@ public class MultilayerPerceptronWeka {
                     }  
                     
                     meanAccuracy += ( (((double)tse+tnse) / (tse+tnse+fse+fnse)) / folds);
-                    meanPrecision += ( ((double)tse / (tse+fnse)) / folds );
+                    meanPrecision += ( ((double)tse / (tse+fse)) / folds );
                     meanRecall += ( ((double)tse / (tse+fnse)) / folds );
                     
                 }
