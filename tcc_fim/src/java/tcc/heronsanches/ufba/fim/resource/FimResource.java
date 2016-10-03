@@ -98,20 +98,34 @@ public class FimResource {
     }
     
     
-    /**train network and saves the classifier*/
     @PUT
-    @Path("training-network")
+    @Path("training-network-crossvalidation")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String trainingNetwork(String json){   
+    public String trainingNetworkCrossvalidation(String json){   
 
         JsonObject jo = JSONUtils.convertStringtoJSON(json);
-        return MultilayerPerceptronWeka.trainingNetwork(jo.getString("pathToArrf"));
+        return MultilayerPerceptronWeka.stratifiedKCrossvalidation(jo.getString("pathToArrf"));
         
     }
     
     
     /**train network and saves the classifier*/
+    @PUT
+    @Path("training-network")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String trainingNetwork(String json){   
+
+        JsonObject jo = JSONUtils.convertStringtoJSON(json);
+        if(MultilayerPerceptronWeka.trainingNetwork(jo.getString("pathToArrf")))
+            return "{\"status\":4}";
+        
+        return "{\"status\":6}";
+        
+    }
+    
+    
     @PUT
     @Path("training-network-holdout")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -119,7 +133,7 @@ public class FimResource {
     public String trainingNetworkHoldout(String json){   
 
         JsonObject jo = JSONUtils.convertStringtoJSON(json);
-        return MultilayerPerceptronWeka.trainingNetworkHoldout(jo.getString("pathToArrf"));
+        return MultilayerPerceptronWeka.holdoutRandomized(jo.getString("pathToArrf"));
         
     }
     
