@@ -7,11 +7,11 @@ import java.sql.DriverManager;
 public class DB {
 
 	// configuration of the database driver
-	private final static String user = "";
-	private final static String password = "";
+	private final static String user = "tcc";
+	private final static String password = "pf220161";
 	private final static String JDBC_DRIVER = "org.postgresql.Driver";
-	private final static String DB_NAME = "";
-	private final static String url = "jdbc:postgresql://pathToDatabase:portNumber/"+DB_NAME;
+	private final static String DB_NAME = "tcc";
+	private final static String url = "jdbc:postgresql://tcc.cq6cvriygdef.us-east-1.rds.amazonaws.com:5432/"+DB_NAME;
 	
 	public static final String SCHEMA_MASTER = "master.";
 	

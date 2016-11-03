@@ -21,17 +21,12 @@ public class BasketDAO {
         final String nonSideEffect = "no";
         
         final String head = "@RELATION basket\n\n"
-                //+ "@ATTRIBUTE a_num_width REAL\n"
-                //+ "@ATTRIBUTE a_num_height REAL\n"
-                //+ "@ATTRIBUTE a_num_length REAL\n"
-                //+ "@ATTRIBUTE a_num_mass REAL\n"
-                //+ "@ATTRIBUTE a_num_diameter REAL\n"
-                //+ "@ATTRIBUTE quantity_itens REAL\n"
-                + "@ATTRIBUTE t_num_width REAL\n"
+                + "@ATTRIBUTE m_altura REAL\n"
+                + "@ATTRIBUTE s_altura REAL\n"
                 + "@ATTRIBUTE class {"+nonSideEffect+","+sideEffect+"}\n\n"
                 + "@DATA\n";
         
-        String dataset = head;
+        String basket = head;
         
         if(con != null){
             
@@ -50,9 +45,6 @@ public class BasketDAO {
                 
                 double sumWidth = 0;
                 double sumHeight = 0;
-                double sumLength = 0;
-                double sumMass = 0;
-                double sumDiameter = 0;
                 double numberItens = 0;
                 DecimalFormat df = new DecimalFormat("#.###################");
                 
@@ -69,25 +61,19 @@ public class BasketDAO {
                         first = false;
                         
                     }else if(actualId != id){
-                            
-                        /*dataset += df.format(sumWidth / numberItens)+","+df.format(sumHeight / numberItens)+","+df.format(sumLength / numberItens)+","
-                                +df.format(sumMass / numberItens)+","+df.format(sumDiameter / numberItens)+","+numberItens;*/
                         
-                        dataset += df.format(sumWidth);
+                        basket += df.format(sumHeight / numberItens)+","+df.format(sumWidth);
                         
                         sumWidth = 0;
                         sumHeight = 0;
-                        sumLength = 0;
-                        sumMass = 0;
-                        sumDiameter = 0;
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",?"/*+sideEffect*/;
+                            basket += ",?"/*+sideEffect*/;
                         else
-                            dataset += ",?"/*+sideEffect*/;
+                            basket += ",?"/*+sideEffect*/;
 
-                        dataset += "\n";  
+                        basket += "\n";  
                         
                         id = actualId;
                         beforeSiddeEffect = actualSiddeEffect;
@@ -101,31 +87,22 @@ public class BasketDAO {
                         numberItens++;
                         sumWidth += rs.getDouble("num_width");
                         sumHeight += rs.getDouble("num_height");
-                        sumLength += rs.getDouble("num_length");
-                        sumMass += rs.getDouble("num_mass");
-                        sumDiameter += rs.getDouble("num_diameter");
                         i++;
                         
                     }
                     
                     if(rs.isLast()){
                         
-                        /*dataset += df.format(sumWidth / numberItens)+","+df.format(sumHeight / numberItens)+","+df.format(sumLength / numberItens)+","
-                                +df.format(sumMass / numberItens)+","+df.format(sumDiameter /numberItens)+","+numberItens;*/
-                        
-                        dataset += df.format(sumWidth);                     
+                       basket += df.format(sumHeight / numberItens)+","+df.format(sumWidth);                    
                         
                         sumWidth = 0;
                         sumHeight = 0;
-                        sumLength = 0;
-                        sumMass = 0;
-                        sumDiameter = 0;
                         numberItens = 0;
                         
                         if(beforeSiddeEffect)
-                            dataset += ",?"/*+sideEffect*/;
+                            basket += ",?"/*+sideEffect*/;
                         else
-                            dataset += ",?"/*+nonSideEffect*/;
+                            basket += ",?"/*+nonSideEffect*/;
                         
                     }
                     
@@ -137,7 +114,8 @@ public class BasketDAO {
             
         }
         
-        return dataset;
+        System.out.println(basket);
+        return basket;
         
     }
     
@@ -149,20 +127,20 @@ public class BasketDAO {
         final String nonSideEffect = "no";
         
         final String head = "@RELATION basket\n\n"
-               // + "@ATTRIBUTE a_num_width REAL\n"
-                //+ "@ATTRIBUTE a_num_height REAL\n"
-                //+ "@ATTRIBUTE a_num_length REAL\n"
-                //+ "@ATTRIBUTE a_num_mass REAL\n"
-                //+ "@ATTRIBUTE a_num_diameter REAL\n"
-                + "@ATTRIBUTE t_num_width REAL\n"
-                //+ "@ATTRIBUTE t_num_height REAL\n"
-                //+ "@ATTRIBUTE t_num_length REAL\n"
-                //+ "@ATTRIBUTE t_num_mass REAL\n"
-                //+ "@ATTRIBUTE t_num_diameter REAL\n"
-                //+ "@ATTRIBUTE quantity_itens REAL\n"
+                //+ "@ATTRIBUTE m_largura REAL\n"
+                + "@ATTRIBUTE m_altura REAL\n"
+                //+ "@ATTRIBUTE m_comprimento REAL\n"
+                //+ "@ATTRIBUTE m_massa REAL\n"
+                //+ "@ATTRIBUTE m_diametro REAL\n"
+                //+ "@ATTRIBUTE s_largura REAL\n"
+                + "@ATTRIBUTE s_altura REAL\n"
+                //+ "@ATTRIBUTE s_comprimento REAL\n"
+                //+ "@ATTRIBUTE s_massa REAL\n"
+                //+ "@ATTRIBUTE s_diametro REAL\n"
+                //+ "@ATTRIBUTE qtde_itens REAL\n"
                 + "@ATTRIBUTE class {"+nonSideEffect+","+sideEffect+"}\n\n"
                 + "@DATA\n";
-        
+
         String dataset = head;
         
         if(con != null){
@@ -205,9 +183,10 @@ public class BasketDAO {
                                 +df.format(sumMass / numberItens)+","+df.format(sumDiameter / numberItens)+","+df.format(sumWidth)+","+df.format(sumHeight)+","
                                 +df.format(sumLength)+","+df.format(sumMass)+","+df.format(sumDiameter)+","+numberItens;*/
                         
-                        //dataset += df.format(sumWidth)+","+df.format(sumMass);
-                        dataset += df.format(sumWidth);
-                        //dataset += df.format(sumDiameter / numberItens)+","+df.format(sumWidth);
+                        //dataset += df.format(sumWidth)+","+df.format(sumDiameter);
+                        //dataset += df.format(sumHeight / numberItens)+","+df.format(sumWidth)+","+df.format(sumMass)+","+df.format(sumDiameter);
+                        dataset += df.format(sumHeight / numberItens)+","+df.format(sumMass);
+                        //dataset += df.format(sumDiameter / numberItens)+","+df.format(sumWidth)+","+df.format(sumMass);
                         
                         sumWidth = 0;
                         sumHeight = 0;
@@ -247,10 +226,15 @@ public class BasketDAO {
                         /*dataset += df.format(sumWidth / numberItens)+","+df.format(sumHeight / numberItens)+","+df.format(sumLength / numberItens)+","
                                 +df.format(sumMass / numberItens)+","+df.format(sumDiameter / numberItens)+","+df.format(sumWidth)+","+df.format(sumHeight)+","
                                 +df.format(sumLength)+","+df.format(sumMass)+","+df.format(sumDiameter)+","+numberItens;*/
-                        
+                        //dataset += df.format(sumHeight / numberItens)+","+sumMass;
                         //dataset += df.format(sumWidth)+","+df.format(sumMass);
-                        dataset += df.format(sumWidth);
+                        //dataset += df.format(sumHeight / numberItens)+","+df.format(sumWidth);
+                        //dataset += df.format(sumWidth)+","+df.format(sumDiameter);
+                        //dataset += df.format(sumWidth);
                         //dataset += df.format(sumDiameter / numberItens)+","+df.format(sumWidth);
+                        //dataset += df.format(sumDiameter / numberItens)+","+df.format(sumWidth)+","+df.format(sumMass);
+                        //dataset += df.format(sumHeight / numberItens)+","+df.format(sumWidth)+","+df.format(sumMass)+","+df.format(sumDiameter);
+                        dataset += df.format(sumHeight / numberItens)+","+df.format(sumMass);
                         
                         sumWidth = 0;
                         sumHeight = 0;

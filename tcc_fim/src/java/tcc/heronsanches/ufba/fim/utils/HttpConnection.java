@@ -20,7 +20,7 @@ public class HttpConnection {
     public final static String WEBSERVER_GCM = "https://fcm.googleapis.com/fcm/send";
     
     /**Key server to use to send push notifications with FCM*/
-	private final static String KEY_SERVER = "put here your key server";
+	private final static String KEY_SERVER = "put your key here";
 	
     
 	private HttpConnection(){ }

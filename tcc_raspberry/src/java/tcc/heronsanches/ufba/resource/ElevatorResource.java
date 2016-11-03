@@ -23,6 +23,25 @@ import tcc.heronsanches.ufba.utils.HttpConnection;
 /**It represents an Elevator Resource.*/
 @Path("elevator")
 public class ElevatorResource{
+    
+    
+        @GET
+    @Path("sensor-obstaculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getInfo(){
+        
+        JsonObjectBuilder job = Json.createObjectBuilder();
+        JsonObjectBuilder job2 = Json.createObjectBuilder();
+        //job.add("on", CarResource.on);
+        job.add("ligado", true);
+        job.add("obstaculo", false);
+        job.add("anguloDeteccao", "35 graus");
+        job.add("faixaDeteccao", "7,5cm");
+        job.add("status", 4);
+
+        return JSONUtils.getJsonString(job.build());
+        
+    } 
        
     private static final String TYPE = "freight home intelligent elevator";
     
@@ -134,6 +153,7 @@ public class ElevatorResource{
             job.add(Constants.STATUS, Constants.OK);
             job.add(Constants.MESSAGE, Json.createObjectBuilder().add(Constants.MESSAGE, "elevator is taking the object").build());
             HttpConnection.makePutRequest(HttpConnection.PATH_RESOURCE_FIM+"system/observer-execution-freight", job.build().toString());
+            //TODO and here would CALL the F2 (upWithFreight()) not implemented
             
         /*}else if(ElevatorResource.ESM.getActualMass() == 0){
             

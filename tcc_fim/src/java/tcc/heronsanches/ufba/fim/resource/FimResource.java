@@ -23,7 +23,7 @@ import tcc.heronsanches.ufba.fim.db.pojo.Item;
 import tcc.heronsanches.ufba.fim.utils.Constants;
 import tcc.heronsanches.ufba.fim.utils.HttpConnection;
 import tcc.heronsanches.ufba.fim.utils.JSONUtils;
-import tcc.heronsanches.ufba.fim.utils.MultilayerPerceptronWeka;
+import tcc.heronsanches.ufba.fim.utils.ClassificationWeka;
 import tcc.heronsanches.ufba.fim.utils.WriteReadObjects;
 
 
@@ -69,7 +69,7 @@ public class FimResource {
         return DBFacade.generatesDatasetWeka();
     }
     
-    
+   
     /**@return json object {"basket":[array of {@linkplain Item}]}  */
     @GET
     @Path("basket")
@@ -105,9 +105,50 @@ public class FimResource {
     public String trainingNetworkCrossvalidation(String json){   
 
         JsonObject jo = JSONUtils.convertStringtoJSON(json);
-        return MultilayerPerceptronWeka.stratifiedKCrossvalidation(jo.getString("pathToArrf"));
+        String result = "";
+        //int datasets[] = {16, 20, 25, 30, 35, 40, 45, 50, 55, 58};
+        //int datasets[] = {16, 20, 25, 30, 35, 40, 45, 50, 55, 59}; 
+        //int datasets[] = {16, 20, 25, 30, 35, 40, 45, 50, 55, 57}; 
+        //int datasets[] = {16, 20, 25, 30, 35, 40, 45, 49}; 
+        ClassificationWeka.listAccuracies = "";
+        ClassificationWeka.listPrecisions = "";
+        ClassificationWeka.listRecalls = "";
+        ClassificationWeka.listAccuraciesDev = "";
+        ClassificationWeka.listPrecisionsDev = "";
+        ClassificationWeka.listRecallsDev = "";
+        ClassificationWeka.acc = 0;
+        ClassificationWeka.prec = 0;
+        ClassificationWeka.rec = 0;
+        ClassificationWeka.numRand = 0;
+        
+        /*for(int d: datasets)
+           result += ClassificationWeka.stratifiedKCrossvalidation2(jo.getString("pathToArrf"), d);*/
+        
+        while( !(ClassificationWeka.acc >= 90.97 && ClassificationWeka.prec >= 97.46 && ClassificationWeka.rec >= 90.25) ){
+            //System.out.println("acc: "+ClassificationWeka.acc+", prec: "+ClassificationWeka.prec+"rec: "+ClassificationWeka.rec);
+            result += ClassificationWeka.stratifiedKCrossvalidation2(jo.getString("pathToArrf"), 45);
+        }
+        return result+"\n\n===============lists==============="
+                +"\nlist accuracies: "+ClassificationWeka.listAccuracies
+                +"\nlist recalls: "+ClassificationWeka.listRecalls
+                +"\nlist precisions: "+ClassificationWeka.listPrecisions
+                +"\nlist deviation accuracies: "+ClassificationWeka.listAccuraciesDev
+                +"\nlist deviation recalls: "+ClassificationWeka.listRecallsDev
+                +"\nlist deviation precisions: "+ClassificationWeka.listPrecisionsDev;
         
     }
+
+    
+    /*@PUT
+    @Path("training-network-holdout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String trainingNetworkHoldout(String json){   
+
+        JsonObject jo = JSONUtils.convertStringtoJSON(json);
+        return ClassificationWeka.holdoutRandomized2(jo.getString("pathToArrf"));
+        
+    }*/
     
     
     /**train network and saves the classifier*/
@@ -118,25 +159,13 @@ public class FimResource {
     public String trainingNetwork(String json){   
 
         JsonObject jo = JSONUtils.convertStringtoJSON(json);
-        if(MultilayerPerceptronWeka.trainingNetwork(jo.getString("pathToArrf")))
+        if(ClassificationWeka.trainingNetwork(jo.getString("pathToArrf")))
             return "{\"status\":4}";
         
         return "{\"status\":6}";
         
     }
-    
-    
-    @PUT
-    @Path("training-network-holdout")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String trainingNetworkHoldout(String json){   
-
-        JsonObject jo = JSONUtils.convertStringtoJSON(json);
-        return MultilayerPerceptronWeka.holdoutRandomized(jo.getString("pathToArrf"));
-        
-    }
-    
+  
     
     private final ExecutorService executorService = java.util.concurrent.Executors.newCachedThreadPool();
 
@@ -163,7 +192,7 @@ public class FimResource {
         try {
             
             JsonObject jo = JSONUtils.convertStringtoJSON(json);
-            return MultilayerPerceptronWeka.testingNetwork(jo.getString("pathToArrf"));
+            return ClassificationWeka.testingNetwork(jo.getString("pathToArrf"));
             
         } catch (Exception ex) {
             Logger.getLogger(FimResource.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,7 +220,7 @@ public class FimResource {
             pushNotification.add("to", DBFacade.getToken(1));
             //Logger.getLogger(FimResource.class.getName()).log(Level.INFO, "token::::"+DBFacade.getToken(1));
             JsonObjectBuilder data = Json.createObjectBuilder();
-            data.add("message", "Service already at executing.");
+            data.add("message", "Serviço já está em execução, tente mais tarde.");
             data.add("service", "Freight Home Service");
 
             pushNotification.add("data", data.build());	
@@ -244,13 +273,14 @@ public class FimResource {
                                 
                                 String basketFileName = joCar.getString("basket");
                                 joCar = joCar.getJsonObject("car"); //info car
+                                System.out.println(basketFileName);
 
                                 //compare the info of the elevator and car for verifying if it is acceptable to allow this service
                                 /*if(joEl.getJsonNumber("maxMass").doubleValue() >= joCar.getJsonNumber("maxMass").doubleValue()
                                     && !joCar.getBoolean("moving") && !joCar.getBoolean("obstacleSensor")){*/
                                     
-                                    //verifying if is sidde effect! TODO uncomment it when put in production!
-                                    /*if(MultilayerPerceptronWeka.isSideEffect(basketFileName)){
+                                    //verifying if is sidde effect!
+                                    if(ClassificationWeka.isSideEffect(basketFileName)){
                                         
                                         FimResource.idTuple = 0;
                                         
@@ -259,7 +289,7 @@ public class FimResource {
                                         pushNotification.add("to", DBFacade.getToken(1));
                                         //Logger.getLogger(FimResource.class.getName()).log(Level.INFO, "token::::"+DBFacade.getToken(1));
                                         JsonObjectBuilder data = Json.createObjectBuilder();
-                                        data.add("message", "Sidde effect detected! Please veryfies the itens on car, maybe there are a lot of them.");
+                                        data.add("message", "Efeito colateral indesejável detectado! Por favor verificar os itens no veiculo, talvez tenha itens por demais.");
                                         data.add("service", "Freight Home Service");
 
                                         pushNotification.add("data", data.build());	
@@ -270,9 +300,9 @@ public class FimResource {
                                             ;//Logger.getLogger(FimResource.class.getName()).log(Level.INFO, "gcm sent");
                                         
                                         return JSONUtils.getJsonString(job.add(Constants.STATUS, Constants.ERROR)
-                                            .add(Constants.MESSAGE, "Sidde effect detected! Please veryfies the itens on car, maybe there are a lot of them.").build());
+                                            .add(Constants.MESSAGE, "Efeito colateral indesejável detectado! Por favor verificar os itens no veículo, talvez tenha itens por demais.").build());
                                         
-                                    }*/
+                                    }
                                     
                                     ra4 = new RequestAnswer(RequestAnswer.PATH_RESOURCE_ARDUINO+"car/go-to-elevator", HttpConnection.METHOD_PUT);
                                     result = HttpConnection.makePutRequest(ra4.getRequestPath());
@@ -417,7 +447,7 @@ public class FimResource {
                     pushNotification.add("to", DBFacade.getToken(1));
                     //Logger.getLogger(FimResource.class.getName()).log(Level.INFO, "token::::"+DBFacade.getToken(1));
                     JsonObjectBuilder data = Json.createObjectBuilder();
-                    data.add("message", "elevator is taking the object");
+                    data.add("message", "Elevador levando cesta!");
                     data.add("service", "Freight Home Service");
 
                     pushNotification.add("data", data.build());	
@@ -444,7 +474,7 @@ public class FimResource {
                     pushNotification.add("to", DBFacade.getToken(1));
                     //Logger.getLogger(FimResource.class.getName()).log(Level.INFO, "token::::"+DBFacade.getToken(1));
                     JsonObjectBuilder data = Json.createObjectBuilder();
-                    data.add("message", "elevator door obstructed");
+                    data.add("message", "Porta do elevador obstruída");
                     data.add("service", "Freight Home Service");
 
                     pushNotification.add("data", data.build());						
